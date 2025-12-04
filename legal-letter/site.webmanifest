@@ -1,0 +1,14 @@
+{
+    "name": "NC Lawyers Advocacy",
+    "short_name": "NC Lawyers",
+    "icons": [
+        {
+            "src": "favicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml"
+        }
+    ],
+    "theme_color": "#1e3a8a",
+    "background_color": "#1e3a8a",
+    "display": "standalone"
+}

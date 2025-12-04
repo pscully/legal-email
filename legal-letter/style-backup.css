@@ -1,0 +1,807 @@
+/*
+ Theme Name:   Twenty Twenty-Five Child
+ Theme URI:    https://yourwebsite.com/
+ Description:  Child theme for the Twenty Twenty-Five theme - NC Lawyers Advocacy Website
+ Author:       Your Name
+ Author URI:   https://yourwebsite.com/
+ Template:     twentytwentyfive
+ Version:      1.0.0
+*/
+
+/* ==========================================================================
+   Background Image Implementation
+   ========================================================================== */
+
+body {
+    background-image: url('parchment-background.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-color: #ffffff; /* Fallback color */
+}
+
+/* Add a semi-transparent overlay to ensure text readability */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.85); /* White overlay with 85% opacity */
+    z-index: -1;
+}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+/* Body text and paragraphs */
+body, p {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #1f2937; /* Dark Gray Text */
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    color: #1f2937; /* Dark Gray Text */
+}
+
+/* Ensure minimum font size on mobile */
+@media (max-width: 768px) {
+    body, p {
+        font-size: 16px; /* Maintain minimum 16px on mobile */
+    }
+}
+
+/* ==========================================================================
+   Color Palette
+   ========================================================================== */
+
+/* Primary Color for links and interactive elements */
+a {
+    color: #1e3a8a; /* Navy Blue */
+}
+
+a:hover {
+    color: #1e40af; /* Slightly lighter navy on hover */
+}
+
+/* Button Styles */
+.wp-block-button__link {
+    background-color: #1e3a8a; /* Navy Blue */
+    color: #ffffff;
+    border-radius: 4px;
+    padding: 12px 24px;
+    border: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.wp-block-button__link:hover {
+    background-color: #1e40af; /* Slightly lighter navy on hover */
+    color: #ffffff;
+}
+
+/* Accent color for special buttons or highlights */
+.wp-block-button.is-style-outline .wp-block-button__link,
+a.accent-link {
+    color: #d97706; /* Gold/Bronze */
+    border: 2px solid #d97706;
+    background-color: transparent;
+}
+
+.wp-block-button.is-style-outline .wp-block-button__link:hover,
+a.accent-link:hover {
+    background-color: #d97706;
+    color: #ffffff;
+}
+
+/* Secondary color for meta text or subtitles */
+.entry-meta, 
+.wp-block-post-date,
+.wp-block-post-author,
+.wp-block-post-terms {
+    color: #64748b; /* Gray */
+    font-size: 14px;
+}
+
+/* ==========================================================================
+   Clean Layout System - No Duplicate Styling
+   ========================================================================== */
+
+/* Main container - simple and clean */
+.wp-site-blocks {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* AGGRESSIVE RESET: Remove ALL WordPress block styling */
+.wp-block-group,
+.wp-block-group__inner-container,
+.wp-block-cover,
+.wp-block-columns,
+.wp-block-column,
+.wp-site-blocks > *,
+.wp-site-blocks .wp-block-group,
+.entry-content .wp-block-group,
+main .wp-block-group {
+    background: none !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 1rem 0 !important;
+    max-width: none !important;
+}
+
+/* Force remove any Twenty Twenty-Five theme styling */
+.wp-site-blocks,
+.wp-site-blocks > *,
+.entry-content,
+.entry-content > * {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+/* Override any parent theme containers - EXCEPT body background */
+.wp-site-blocks,
+main,
+article,
+.entry-content {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Restore body background image */
+body {
+    background-image: url('parchment-background.jpg') !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+    background-size: cover !important;
+    background-color: #ffffff !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Restore background overlay */
+body::before {
+    content: "" !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: rgba(255, 255, 255, 0.85) !important;
+    z-index: -1 !important;
+}
+
+/* HIGH SPECIFICITY: Apply styling ONLY to our specific section classes */
+body .wp-site-blocks .hero-section,
+.entry-content .hero-section,
+main .hero-section {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    text-align: center !important;
+    padding: 3rem 0 !important;
+    margin: 2rem 0 !important;
+}
+
+body .wp-site-blocks .social-proof,
+.entry-content .social-proof,
+main .social-proof {
+    background: rgba(217, 119, 6, 0.05) !important;
+    border: 1px solid rgba(217, 119, 6, 0.2) !important;
+    border-radius: 12px !important;
+    padding: 2rem !important;
+    margin: 2rem auto !important;
+    text-align: center !important;
+    max-width: 600px !important;
+    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.1) !important;
+}
+
+body .wp-site-blocks .letter-section,
+.entry-content .letter-section,
+main .letter-section {
+    background: rgba(255, 255, 255, 0.97) !important;
+    border: 1px solid rgba(30, 58, 138, 0.1) !important;
+    border-radius: 12px !important;
+    padding: 3rem 2.5rem !important;
+    margin: 2rem 0 !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+    position: relative !important;
+}
+
+body .wp-site-blocks .letter-section::before,
+.entry-content .letter-section::before,
+main .letter-section::before {
+    content: "" !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 4px !important;
+    background: linear-gradient(90deg, #1e3a8a, #d97706, #1e3a8a) !important;
+    border-radius: 12px 12px 0 0 !important;
+}
+
+body .wp-site-blocks .form-section,
+.entry-content .form-section,
+main .form-section {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.95)) !important;
+    border: 1px solid rgba(30, 58, 138, 0.1) !important;
+    border-radius: 20px !important;
+    padding: 3.5rem 3rem !important;
+    margin: 4rem 0 !important;
+    box-shadow: 0 16px 64px rgba(0, 0, 0, 0.12), 0 8px 24px rgba(0, 0, 0, 0.08) !important;
+    position: relative !important;
+}
+
+body .wp-site-blocks .form-section::before,
+.entry-content .form-section::before,
+main .form-section::before {
+    content: "" !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 8px !important;
+    background: linear-gradient(90deg, #1e3a8a, #d97706, #1e3a8a) !important;
+    border-radius: 20px 20px 0 0 !important;
+}
+
+body .wp-site-blocks .endorsements,
+.entry-content .endorsements,
+main .endorsements {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin: 3rem 0 !important;
+    padding: 0 !important;
+}
+
+/* Ensure proper spacing between all sections */
+.hero-section + .social-proof,
+.social-proof + .letter-section,
+.letter-section + .form-section,
+.form-section + .endorsements {
+    margin-top: 3rem;
+}
+
+/* Header area styling */
+.wp-block-template-part header {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* Footer styling */
+.wp-block-template-part footer {
+    background-color: rgba(30, 58, 138, 0.95); /* Navy with transparency */
+    color: #ffffff;
+}
+
+.wp-block-template-part footer a {
+    color: #ffffff;
+}
+
+.wp-block-template-part footer a:hover {
+    color: #d97706; /* Gold accent on hover */
+}
+
+/* ==========================================================================
+   Form Styling (for Paperform integration)
+   ========================================================================== */
+
+/* Generic form styling that will apply to embedded forms */
+.form-container,
+.paperform-container {
+    background-color: rgba(255, 255, 255, 0.98);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin: 2rem 0;
+}
+
+/* Form inputs styling */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+textarea,
+select {
+    border: 2px solid #e5e7eb;
+    border-radius: 4px;
+    padding: 12px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+    border-color: #1e3a8a; /* Navy Blue */
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+}
+
+/* Form submit buttons */
+input[type="submit"],
+button[type="submit"] {
+    background-color: #1e3a8a; /* Navy Blue */
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    padding: 12px 24px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+input[type="submit"]:hover,
+button[type="submit"]:hover {
+    background-color: #1e40af; /* Slightly lighter navy on hover */
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    .wp-site-blocks,
+    .wp-block-group,
+    article,
+    .form-container,
+    .paperform-container {
+        padding: 1rem;
+        margin: 0.5rem 0;
+    }
+    
+    /* Adjust background attachment for mobile performance */
+    body {
+        background-attachment: scroll;
+    }
+}
+
+/* Tablet optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .wp-site-blocks,
+    .wp-block-group,
+    article {
+        padding: 1.5rem;
+    }
+}
+
+/* ==========================================================================
+   High-End Professional Enhancements
+   ========================================================================== */
+
+/* Enhanced Site Header */
+.site-header {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.95));
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(30, 58, 138, 0.15);
+    padding: 1.5rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.site-title {
+    font-family: 'Roboto', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1e3a8a;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 0;
+    letter-spacing: -0.025em;
+}
+
+.site-tagline {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.1rem;
+    color: #64748b;
+    font-style: italic;
+    margin-top: 0.5rem;
+}
+
+/* Enhanced Main Heading */
+.main-heading {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #1e3a8a;
+    text-align: center;
+    margin: 3rem 0 1.5rem;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sub-heading {
+    font-size: 1.3rem;
+    color: #64748b;
+    text-align: center;
+    margin-bottom: 3rem;
+    font-weight: 400;
+    line-height: 1.4;
+}
+
+/* Letter Content Section */
+.letter-section {
+    background: rgba(255, 255, 255, 0.98);
+    padding: 3rem;
+    border-radius: 16px;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.15), 0 4px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(30, 58, 138, 0.12);
+    margin: 3rem 0;
+    position: relative;
+}
+
+.letter-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #1e3a8a 0%, #d97706 50%, #1e3a8a 100%);
+    border-radius: 16px 16px 0 0;
+}
+
+.letter-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1e3a8a;
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.letter-title::after {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 3px;
+    background: #d97706;
+    margin: 1rem auto;
+    border-radius: 2px;
+}
+
+/* Enhanced Typography for Letter Content */
+.letter-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: #1f2937;
+}
+
+.letter-content p:first-of-type::first-letter {
+    font-size: 4rem;
+    font-weight: 700;
+    float: left;
+    line-height: 1;
+    margin: 0.1rem 0.8rem 0 0;
+    color: #1e3a8a;
+    font-family: 'Roboto', serif;
+}
+
+/* Enhanced Form Section */
+.form-section {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.95));
+    padding: 3.5rem 3rem;
+    border-radius: 20px;
+    box-shadow: 0 16px 64px rgba(0, 0, 0, 0.12), 0 8px 24px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(30, 58, 138, 0.1);
+    margin: 4rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.form-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: linear-gradient(90deg, #1e3a8a, #d97706, #1e3a8a);
+    border-radius: 20px 20px 0 0;
+}
+
+.form-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #1e3a8a;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    position: relative;
+}
+
+.form-title::after {
+    content: "✍️";
+    display: block;
+    font-size: 2rem;
+    margin-top: 1rem;
+}
+
+/* Premium Form Styling */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.form-field {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.form-field label {
+    display: block;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    letter-spacing: 0.025em;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+    width: 100%;
+    padding: 1rem 1.2rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Open Sans', sans-serif;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+    border-color: #1e3a8a;
+    box-shadow: 0 0 0 4px rgba(30, 58, 138, 0.1);
+    outline: none;
+    background: #ffffff;
+}
+
+.required-field::after {
+    content: " *";
+    color: #dc2626;
+    font-weight: 700;
+}
+
+/* Agreement Checkbox Styling */
+.agreement-field {
+    background: rgba(30, 58, 138, 0.05);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(30, 58, 138, 0.15);
+    margin: 2rem 0;
+}
+
+.agreement-field input[type="checkbox"] {
+    width: auto;
+    margin-right: 0.8rem;
+    transform: scale(1.2);
+}
+
+.agreement-field label {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Enhanced Submit Button */
+.submit-button {
+    background: linear-gradient(135deg, #1e3a8a, #1e40af);
+    color: #ffffff;
+    border: none;
+    padding: 1.2rem 3rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(30, 58, 138, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: relative;
+    overflow: hidden;
+}
+
+.submit-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(30, 58, 138, 0.4);
+}
+
+.submit-button:hover::before {
+    left: 100%;
+}
+
+/* Social Proof Elements */
+
+.signature-count {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #d97706;
+    display: block;
+}
+
+.signature-label {
+    font-size: 1.1rem;
+    color: #64748b;
+    margin-top: 0.5rem;
+}
+
+/* Professional Footer */
+.site-footer {
+    background: linear-gradient(135deg, #1e3a8a, #1e40af);
+    color: #ffffff;
+    padding: 3rem 0;
+    margin-top: 4rem;
+    text-align: center;
+    position: relative;
+}
+
+.site-footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+}
+
+.footer-links {
+    margin: 1.5rem 0;
+}
+
+.footer-links a {
+    color: #ffffff;
+    margin: 0 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #d97706;
+}
+
+/* ==========================================================================
+   Accessibility Enhancements
+   ========================================================================== */
+
+/* Ensure proper focus indicators */
+a:focus,
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+    outline: 3px solid #d97706;
+    outline-offset: 2px;
+}
+
+/* High contrast for better readability */
+@media (prefers-contrast: high) {
+    body::before {
+        background-color: rgba(255, 255, 255, 0.95);
+    }
+    
+    .wp-site-blocks,
+    .wp-block-group,
+    article,
+    .letter-section,
+    .form-section {
+        background-color: #ffffff;
+        border: 2px solid #1f2937;
+    }
+}
+
+/* ==========================================================================
+   WordPress Block Element Cleanup
+   ========================================================================== */
+
+/* Remove extra margins from WordPress block elements */
+.wp-block-heading {
+    margin-top: 0 !important;
+}
+
+.wp-block-paragraph {
+    margin-top: 0 !important;
+}
+
+/* ==========================================================================
+   Enhanced Responsive Design
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    .wp-site-blocks {
+        padding: 0 0.5rem;
+    }
+    
+    .main-heading {
+        font-size: 2.5rem;
+    }
+    
+    .letter-title {
+        font-size: 2rem;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .letter-section {
+        padding: 2rem 1.5rem;
+        margin: 2rem 0;
+    }
+    
+    .form-section {
+        padding: 2.5rem 1.5rem;
+        margin: 2rem 0;
+    }
+    
+    .social-proof {
+        padding: 1.5rem;
+        margin: 2rem auto;
+    }
+    
+    .submit-button {
+        width: 100%;
+        padding: 1rem 2rem;
+    }
+    
+    .site-title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-heading {
+        font-size: 2rem;
+    }
+    
+    .letter-content p:first-of-type::first-letter {
+        font-size: 3rem;
+        margin: 0.1rem 0.5rem 0 0;
+    }
+}

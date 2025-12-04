@@ -1,0 +1,26 @@
+BACKGROUND IMAGE REQUIRED
+========================
+
+This child theme requires a constitutional parchment background image to be placed in this directory.
+
+Required file name: parchment-background.jpg
+
+Image specifications:
+- Format: JPG or WebP
+- Minimum dimensions: 1920x1080px  
+- Recommended file size: Under 500KB (optimized for web)
+- Style: Constitutional parchment, aged paper, or legal document texture
+- Quality: High resolution for sharp display on all devices
+
+Where to find suitable images:
+- Stock photo sites (Shutterstock, Getty Images, Adobe Stock)
+- Free resources (Unsplash, Pexels) - search for "parchment", "constitution", "aged paper"
+- Government archives for actual constitutional document textures
+- Legal document templates
+
+Once you have the image:
+1. Name it exactly: parchment-background.jpg
+2. Place it in this directory: /wp-content/themes/twentytwentyfive-child/
+3. The CSS is already configured to use this image
+
+The theme will work without this image (white background fallback), but the parchment background is essential for the professional legal aesthetic specified in the project requirements.
