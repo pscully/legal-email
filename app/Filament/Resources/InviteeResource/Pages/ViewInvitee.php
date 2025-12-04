@@ -5,11 +5,10 @@ namespace App\Filament\Resources\InviteeResource\Pages;
 use App\Enums\InviteeStatus;
 use App\Filament\Resources\InviteeResource;
 use Filament\Actions;
-use Filament\Infolists\Components\Section;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Infolist;
-use Filament\Schemas\Schema;
 use Filament\Resources\Pages\ViewRecord;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\TextEntry;
+use Filament\Schemas\Schema;
 
 class ViewInvitee extends ViewRecord
 {
