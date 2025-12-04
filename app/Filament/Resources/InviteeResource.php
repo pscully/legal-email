@@ -9,7 +9,6 @@ use App\Models\Invitee;
 use Filament\Actions\BulkAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\ImportAction;
-use Filament\Actions\ViewAction;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -95,9 +94,7 @@ class InviteeResource extends Resource
                     ->options(InviteeStatus::class)
                     ->multiple(),
             ])
-            ->actions([
-                ViewAction::make(),
-            ])
+            ->actions([])
             ->bulkActions([
                 BulkActionGroup::make([
                     BulkAction::make('mark_as_sent')
@@ -140,7 +137,6 @@ class InviteeResource extends Resource
     {
         return [
             'index' => Pages\ListInvitees::route('/'),
-            'view' => Pages\ViewInvitee::route('/{record}'),
         ];
     }
 
