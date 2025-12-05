@@ -71,10 +71,10 @@ class SendInvitationEmailJob implements ShouldQueue
             return;
         }
 
-        // Check if current time is within 7am-7pm window
-        $now = Carbon::now();
-        $startHour = 7;  // 7am
-        $endHour = 19;   // 7pm
+        // Check if current time is within 7am-7pm window (EST)
+        $now = Carbon::now('America/New_York');
+        $startHour = 7;  // 7am EST
+        $endHour = 19;   // 7pm EST
 
         if ($now->hour < $startHour || $now->hour >= $endHour) {
             // Calculate delay until 7am next valid day

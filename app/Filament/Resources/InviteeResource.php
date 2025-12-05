@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Enums\InviteeStatus;
 use App\Filament\Imports\InviteeImporter;
 use App\Filament\Resources\InviteeResource\Pages;
+use App\Jobs\SendInvitationEmailJob;
 use App\Models\Invitee;
 use Filament\Actions\BulkAction;
 use Filament\Actions\BulkActionGroup;
@@ -14,6 +15,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Schemas\Schema;
+use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use UnitEnum;
@@ -97,6 +99,38 @@ class InviteeResource extends Resource
             ->actions([])
             ->bulkActions([
                 BulkActionGroup::make([
+                    BulkAction::make('send_invites')
+                        ->label('Send Invites')
+                        ->icon('heroicon-o-envelope')
+                        ->color('success')
+                        ->requiresConfirmation()
+                        ->modalHeading('Send Invitation Emails')
+                        ->modalDescription('Are you sure you want to send invitation emails to the selected invitees? Only pending invitees will receive emails.')
+                        ->action(function (Collection $records) {
+                            $pendingCount = 0;
+                            $skippedCount = 0;
+
+                            foreach ($records as $invitee) {
+                                if ($invitee->isPending()) {
+                                    SendInvitationEmailJob::dispatch($invitee);
+                                    $pendingCount++;
+                                } else {
+                                    $skippedCount++;
+                                }
+                            }
+
+                            $message = "Queued {$pendingCount} invitation(s) for sending.";
+                            if ($skippedCount > 0) {
+                                $message .= " Skipped {$skippedCount} non-pending invitee(s).";
+                            }
+
+                            Notification::make()
+                                ->title('Invitations Queued')
+                                ->body($message)
+                                ->success()
+                                ->send();
+                        })
+                        ->deselectRecordsAfterCompletion(),
                     BulkAction::make('mark_as_sent')
                         ->label('Mark as Sent')
                         ->icon('heroicon-o-paper-airplane')
