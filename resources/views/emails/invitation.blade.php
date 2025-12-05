@@ -64,12 +64,12 @@
                         </td>
                     </tr>
 
-                    <!-- Scroll Down CTA -->
+                    <!-- Scroll Down Text -->
                     <tr>
                         <td style="padding: 0 40px 30px 40px; text-align: center;">
-                            <a href="#letter" style="display: inline-block; padding: 14px 30px; background-color: #2f3087; color: #ffffff; text-decoration: none; font-size: 16px; font-weight: bold; border-radius: 4px;">
-                                Scroll down to read the letter
-                            </a>
+                            <p style="margin: 0; font-size: 16px; font-weight: bold; color: #2f3087;">
+                                Please scroll down to read the letter.
+                            </p>
                         </td>
                     </tr>
 
