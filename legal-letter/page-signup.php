@@ -28,8 +28,20 @@ if ($error) {
     unset($_SESSION['signup_error']);
 }
 
-// If no invite code in URL, show error
-if (empty($invite_code)) {
+// Validate code exists in database and is not used
+$code_valid = false;
+if (!empty($invite_code)) {
+    global $wpdb;
+    $invite_table = $wpdb->prefix . 'invite_codes';
+    $code_check = $wpdb->get_row($wpdb->prepare(
+        "SELECT * FROM $invite_table WHERE code = %s AND used = 0",
+        $invite_code
+    ));
+    $code_valid = ($code_check !== null);
+}
+
+// If no invite code or invalid code, show error
+if (empty($invite_code) || !$code_valid) {
     ?>
     <main id="primary" class="site-main">
         <div class="signup-container error-state">
@@ -87,12 +99,19 @@ if (empty($invite_code)) {
             
             <div class="form-group">
                 <label for="email">Email Address *</label>
-                <input type="email" name="email" id="email" required 
+                <input type="email" name="email" id="email" required
                        value="<?php echo isset($_POST['email']) ? esc_attr($_POST['email']) : ''; ?>"
                        aria-describedby="email-error">
                 <div class="field-error" id="email-error" role="alert"></div>
             </div>
-            
+
+            <div class="form-group">
+                <label for="bar_license">Bar License # *</label>
+                <input type="text" name="bar_license" id="bar_license" required
+                       value="<?php echo isset($_POST['bar_license']) ? esc_attr($_POST['bar_license']) : ''; ?>"
+                       aria-describedby="bar-license-error">
+                <div class="field-error" id="bar-license-error" role="alert"></div>
+            </div>
 
             <div class="form-submit">
                 <button type="submit" class="submit-btn">

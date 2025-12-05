@@ -536,6 +536,19 @@ function create_submissions_table() {
 }
 
 /**
+ * Add bar_license column to submissions table
+ */
+function add_bar_license_column() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'signup_submissions';
+
+    $column_exists = $wpdb->get_var("SHOW COLUMNS FROM $table_name LIKE 'bar_license'");
+    if (!$column_exists) {
+        $wpdb->query("ALTER TABLE $table_name ADD COLUMN bar_license varchar(50) DEFAULT ''");
+    }
+}
+
+/**
  * Update existing submissions table to add new columns
  */
 function update_submissions_table_structure() {
@@ -735,6 +748,10 @@ function import_signees_from_csv($file_path) {
 add_action('after_switch_theme', 'create_invite_codes_table');
 add_action('after_switch_theme', 'create_submissions_table');
 add_action('after_switch_theme', 'update_submissions_table_structure');
+add_action('after_switch_theme', 'add_bar_license_column');
+
+// Also run bar_license column addition on init (for existing installations)
+add_action('init', 'add_bar_license_column');
 
 /**
  * Check if required database tables exist
@@ -825,12 +842,13 @@ function handle_signup_form() {
     $first_name = sanitize_text_field($_POST['first_name']);
     $last_name = sanitize_text_field($_POST['last_name']);
     $email = sanitize_email($_POST['email']);
-    
+    $bar_license = sanitize_text_field($_POST['bar_license']);
+
     // Log received data (without sensitive info)
     error_log('Legal Letter: Processing submission for: ' . $email . ' with code: ' . $invite_code);
     
     // Validate required fields
-    if (empty($first_name) || empty($last_name) || empty($email)) {
+    if (empty($first_name) || empty($last_name) || empty($email) || empty($bar_license)) {
         error_log('Legal Letter: Validation failed - missing required fields');
         $_SESSION['signup_error'] = 'All fields are required.';
         return;
@@ -894,10 +912,11 @@ function handle_signup_form() {
                 'last_name' => $last_name,
                 'email' => $email,
                 'law_firm' => '', // Keep field for database compatibility but set empty
+                'bar_license' => $bar_license,
                 'invite_code' => $invite_code,
                 'submission_date' => current_time('mysql')
             ),
-            array('%s', '%s', '%s', '%s', '%s', '%s')
+            array('%s', '%s', '%s', '%s', '%s', '%s', '%s')
         );
         
         // If database insert was successful, notify Laravel
@@ -915,9 +934,9 @@ function handle_signup_form() {
             // Clear any previous session errors
             unset($_SESSION['signup_error']);
 
-            // Redirect to success page
-            error_log('Legal Letter: Redirecting to thank you page');
-            wp_redirect(home_url('/thank-you/'));
+            // Redirect to homepage
+            error_log('Legal Letter: Redirecting to homepage');
+            wp_redirect(home_url('/'));
             exit;
         } else {
             error_log('Legal Letter: ERROR - Failed to insert submission into database');
