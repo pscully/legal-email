@@ -32,18 +32,13 @@ class SendInvitationEmailJob implements ShouldQueue
     public $backoff = [60, 300, 900]; // 1 min, 5 min, 15 min
 
     /**
-     * The queue the job should be sent to.
-     *
-     * @var string
-     */
-    public $queue = 'invitations';
-
-    /**
      * Create a new job instance.
      */
     public function __construct(
         public Invitee $invitee
-    ) {}
+    ) {
+        $this->onQueue('invitations');
+    }
 
     /**
      * Execute the job.
