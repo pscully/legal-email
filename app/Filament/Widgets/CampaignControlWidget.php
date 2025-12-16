@@ -4,13 +4,20 @@ namespace App\Filament\Widgets;
 
 use App\Models\Invitee;
 use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Support\Enums\Size;
 use Filament\Widgets\Widget;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 
-class CampaignControlWidget extends Widget
+class CampaignControlWidget extends Widget implements HasActions, HasForms
 {
+    use InteractsWithActions;
+    use InteractsWithForms;
+
     protected string $view = 'filament.widgets.campaign-control';
 
     protected static ?int $sort = 3;
