@@ -113,25 +113,23 @@ class CampaignControlWidget extends Widget implements HasActions, HasForms
         return "Next batch: {$batchSize} emails — sending now";
     }
 
-    protected function getHeaderActions(): array
+    public function startCampaignAction(): Action
     {
-        return [
-            Action::make('startCampaign')
-                ->label('Start Campaign')
-                ->icon('heroicon-o-paper-airplane')
-                ->color('success')
-                ->size(Size::Large)
-                ->requiresConfirmation()
-                ->modalHeading('Start Email Campaign?')
-                ->modalDescription(fn () => "This will queue {$this->getPendingCount()} pending invitations for delivery.")
-                ->disabled(fn () => $this->getPendingCount() === 0)
-                ->action(function () {
-                    Artisan::call('invitation:campaign');
+        return Action::make('startCampaign')
+            ->label('Start Campaign')
+            ->icon('heroicon-o-paper-airplane')
+            ->color('success')
+            ->size(Size::Large)
+            ->requiresConfirmation()
+            ->modalHeading('Start Email Campaign?')
+            ->modalDescription(fn () => "This will queue {$this->getPendingCount()} pending invitations for delivery.")
+            ->disabled(fn () => $this->getPendingCount() === 0)
+            ->action(function () {
+                Artisan::call('invitation:campaign');
 
-                    // Refresh this widget in-place so the dashboard updates without navigation
-                    $this->dispatch('$refresh');
-                })
-                ->successNotificationTitle('Campaign started successfully. Emails are being queued.'),
-        ];
+                // Refresh this widget in-place so the dashboard updates without navigation
+                $this->dispatch('$refresh');
+            })
+            ->successNotificationTitle('Campaign started successfully. Emails are being queued.');
     }
 }

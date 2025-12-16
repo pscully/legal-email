@@ -74,9 +74,11 @@
             </div>
 
             {{-- Actions --}}
-            <div class="flex justify-end border-t border-gray-200 pt-4 dark:border-gray-700">
-                <x-filament::actions :actions="$this->getHeaderActions()" />
+            <div class="flex justify-start border-t border-gray-200 pt-4 dark:border-gray-700">
+                {{ $this->startCampaignAction }}
             </div>
+
+            <x-filament-actions::modals />
         </div>
     </x-filament::section>
 </x-filament-widgets::widget>
