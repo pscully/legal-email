@@ -97,6 +97,10 @@ class SendInvitationEmailJob implements ShouldQueue
             // Mark as sent on success
             $this->invitee->markAsSent();
 
+            // Sleep to respect Resend's 2/sec rate limit
+            // This ensures at least 1 second between emails from this worker
+            sleep(1);
+
         } catch (\Exception $e) {
             // Mark as failed on exception
             $this->invitee->markAsFailed();
