@@ -112,7 +112,9 @@ class InviteeResource extends Resource
 
                             foreach ($records as $invitee) {
                                 if ($invitee->isPending()) {
-                                    SendInvitationEmailJob::dispatch($invitee);
+                                    // Delay each job by 1 second to avoid Resend API rate limits (2/sec)
+                                    SendInvitationEmailJob::dispatch($invitee)
+                                        ->delay(now()->addSeconds($pendingCount));
                                     $pendingCount++;
                                 } else {
                                     $skippedCount++;

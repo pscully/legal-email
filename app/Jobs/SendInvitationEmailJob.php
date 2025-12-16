@@ -48,8 +48,6 @@ class SendInvitationEmailJob implements ShouldQueue
     public function middleware(): array
     {
         return [
-            // Rate limit to 2 requests per second for Resend API
-            new RateLimited('resend-api'),
             // Rate limit to 400 emails per hour for deliverability
             new RateLimited('email-deliverability'),
         ];

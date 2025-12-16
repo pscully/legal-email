@@ -97,7 +97,7 @@
                     class="h-5 w-5 text-primary-500"
                 />
                 <p class="text-sm text-gray-700 dark:text-gray-300">
-                    Rate limits: 2/sec (API) &bull; 400/hour (deliverability) &bull; 6am-8pm EST
+                    Rate limits: 1/sec (spaced) &bull; 400/hour (max) &bull; 6am-8pm EST
                 </p>
             </div>
         </div>

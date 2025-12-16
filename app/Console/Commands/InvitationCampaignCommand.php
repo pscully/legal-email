@@ -57,9 +57,13 @@ class InvitationCampaignCommand extends Command
         // Create progress bar
         $this->output->progressStart($count);
 
-        // Dispatch jobs for each pending invitee
+        // Dispatch jobs for each pending invitee with 1-second delays
+        $delaySeconds = 0;
         foreach ($pendingInvitees as $invitee) {
-            SendInvitationEmailJob::dispatch($invitee)->onQueue('invitations');
+            SendInvitationEmailJob::dispatch($invitee)
+                ->onQueue('invitations')
+                ->delay(now()->addSeconds($delaySeconds));
+            $delaySeconds++;
             $this->output->progressAdvance();
         }
 
