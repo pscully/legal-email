@@ -8,9 +8,9 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\Middleware\RateLimited;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Log;
 
 class SendInvitationEmailJob implements ShouldQueue
@@ -41,6 +41,21 @@ class SendInvitationEmailJob implements ShouldQueue
     }
 
     /**
+     * Get the middleware the job should pass through.
+     *
+     * @return array<int, object>
+     */
+    public function middleware(): array
+    {
+        return [
+            // Rate limit to 2 requests per second for Resend API
+            new RateLimited('resend-api'),
+            // Rate limit to 400 emails per hour for deliverability
+            new RateLimited('email-deliverability'),
+        ];
+    }
+
+    /**
      * Execute the job.
      */
     public function handle(): void
@@ -55,31 +70,20 @@ class SendInvitationEmailJob implements ShouldQueue
             return;
         }
 
-        // Check rate limit: 200 emails per hour
-        $rateLimitKey = 'email-invitations-global';
-        $maxAttempts = 200;
-        $decayMinutes = 60;
-
-        if (RateLimiter::tooManyAttempts($rateLimitKey, $maxAttempts)) {
-            // Release job back to queue for 60 seconds
-            $this->release(60);
-            return;
-        }
-
-        // Check if current time is within 7am-7pm window (EST)
+        // Check if current time is within 6am-8pm window (EST)
         $now = Carbon::now('America/New_York');
-        $startHour = 7;  // 7am EST
-        $endHour = 19;   // 7pm EST
+        $startHour = 6;  // 6am EST
+        $endHour = 20;   // 8pm EST
 
         if ($now->hour < $startHour || $now->hour >= $endHour) {
-            // Calculate delay until 7am next valid day
+            // Calculate delay until 6am next valid day
             $nextValidTime = $now->copy();
 
             if ($now->hour >= $endHour) {
-                // After 7pm, wait until 7am tomorrow
+                // After 8pm, wait until 6am tomorrow
                 $nextValidTime->addDay()->setTime($startHour, 0, 0);
             } else {
-                // Before 7am, wait until 7am today
+                // Before 6am, wait until 6am today
                 $nextValidTime->setTime($startHour, 0, 0);
             }
 
@@ -94,9 +98,6 @@ class SendInvitationEmailJob implements ShouldQueue
 
             // Mark as sent on success
             $this->invitee->markAsSent();
-
-            // Hit the rate limiter
-            RateLimiter::hit($rateLimitKey, $decayMinutes * 60);
 
         } catch (\Exception $e) {
             // Mark as failed on exception

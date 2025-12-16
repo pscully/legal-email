@@ -54,11 +54,11 @@ class CampaignControlWidget extends Widget
             return 'N/A';
         }
 
-        // Calculate hours needed based on 200 emails/hour rate limit
-        $hoursNeeded = ceil($pendingCount / 200);
+        // Calculate hours needed based on 400 emails/hour rate limit
+        $hoursNeeded = ceil($pendingCount / 400);
 
-        // Business hours: 7am-7pm = 12 hours/day
-        $businessHoursPerDay = 12;
+        // Business hours: 6am-8pm = 14 hours/day
+        $businessHoursPerDay = 14;
 
         if ($hoursNeeded <= $businessHoursPerDay) {
             return $hoursNeeded === 1 ? '1 hour' : "{$hoursNeeded} hours";
@@ -83,12 +83,12 @@ class CampaignControlWidget extends Widget
             return 'No pending invitees';
         }
 
-        $batchSize = min($pendingCount, 200);
+        $batchSize = min($pendingCount, 400);
 
-        // Determine next run time based on business window (7am local time)
-        $now = now();
-        $startHour = 7;
-        $endHour = 19;
+        // Determine next run time based on business window (6am-8pm EST)
+        $now = now('America/New_York');
+        $startHour = 6;
+        $endHour = 20;
 
         if ($now->hour < $startHour) {
             $nextRun = $now->copy()->setTime($startHour, 0, 0);
